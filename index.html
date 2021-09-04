@@ -45,7 +45,12 @@
     <script>
         var dotPressed = false;
         var operator = "";
-        var firstNum = 0;
+        var firstInt = 0;
+        var firstFloat = 0.0;
+        var firstNum = "";
+        var secondInt = 0;
+        var secondFloat = 0.0;
+        var secondNum = "";
 
         function operate(key)
         {
@@ -53,12 +58,36 @@
             {
 
             } else if (key == "+" || key == "-" || key == "*" || key == "/") {
+                var temp = document.getElementsByClassName("screenText1")[0].value;
+
                 if (operator.length != 0)   // there is an active operator
                 {
 
-                } else {
-                    let temp = document.getElementsByClassName("screenText1")[0].value;
-
+                } 
+                  
+                if (operator.length == 0 && temp.length != 0)
+                {
+                     if (temp.includes("."))
+                    {
+                        firstFloat = parseFloat(temp);
+                        firstNum = "float";
+                    } else {
+                        firstInt = parseInt(temp);
+                        firstNum = "int";
+                    }
+                    
+                    operator = key;
+                    if (key == "+")
+                    {
+                        document.getElementsByClassName("screenText1")[0].value += " + ";
+                    } else if (key == "-") {
+                        document.getElementsByClassName("screenText1")[0].value += " − ";
+                    } else if (key == "*") { 
+                        document.getElementsByClassName("screenText1")[0].value += " × ";
+                    } else {
+                        document.getElementsByClassName("screenText1")[0].value += " ÷ ";
+                    }
+                    dotPressed = false;
                 }
             } else if (key == "sqrt" || key == "neg") {
 
@@ -67,15 +96,15 @@
             } else if (key == "ce") {
 
             } else {
+                var temp = document.getElementsByClassName("screenText1")[0].value;
                 if (key == ".") 
                 {
-                    if (!dotPressed)    // decimal dot can be pressed only once
+                    if (!dotPressed && temp.length != 0)    // decimal dot can be pressed only once
                     {
                         document.getElementsByClassName("screenText1")[0].value += key;
                         dotPressed = true;
                     }
                 } else {
-                    let temp = document.getElementsByClassName("screenText1")[0].value;
                     if (key != "0" || temp != "0") // cannot spam 0's
                     {
                         document.getElementsByClassName("screenText1")[0].value += key;
@@ -88,6 +117,35 @@
                     }
                 }
             }
+        }
+
+        function calculate()
+        {
+            if (operator == "+")
+            {
+                if (firstNum == "int" && secondNum == "int")
+                {
+                    let numResult = firstInt + firstInt;
+                    document.getElementsByClassName("screenText1")[0].value = numResult;
+                    document.getElementsByClassName("screenText2")[0].value = numResult;
+                    firstInt = numResult;
+                } else if (firstNum == "float" && secondNum == "int") {
+                    let numResult = firstInt + firstInt;
+                    document.getElementsByClassName("screenText1")[0].value = numResult;
+                    document.getElementsByClassName("screenText2")[0].value = numResult;
+                    firstInt = numResult;
+                } else if (firstNum == "int" && secondNum == "float") {
+
+                } else if (firstNum == "float" && secondNum == "float") {
+
+                }
+            }
+
+            dotPressed = false;
+            operator = "";
+            secondInt = 0;
+            secondFloat = 0.0;
+            secondNum = "";
         }
     </script>
 </body>
