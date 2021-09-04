@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="./styles/style.css" />
+    <title> Calculator </title>
+    <link rel="icon" href="./images/calculator-icon.jpg" type="image/x-icon">
+</head>
+
+<body> 
+    <div class="calculator">
+        <div class="screenBody">
+            <div class="screen">  
+                <input class="screenText1" type="text" value="" disabled /> <br>
+                <input class="screenText2" type="text" disabled /> 
+            </div>
+        </div>
+
+        <div class="mainBody">
+            <button class="sqrt" onclick='operate("sqrt")'> 
+                &radic;<span style="text-decoration:overline;">&nbsp;&nbsp;</span> 
+            </button>
+            <button class="seven" onclick='operate("7")'> 7 </button> 
+            <button class="eight" onclick='operate("8")'> 8 </button> 
+            <button class="nine" onclick='operate("9")'> 9 </button>
+            <button class="divide" onclick='operate("/")'> ÷ </button>  <br>
+            <button class="negation" onclick='operate("neg")'> +/− </button>
+            <button class="four" onclick='operate("4")'> 4 </button>
+            <button class="five" onclick='operate("5")'> 5 </button> 
+            <button class="six" onclick='operate("6")'> 6 </button>
+            <button class="multiply" onclick='operate("*")'> × </button> <br>
+            <button class="delete" onclick='operate("del")'> Del </button>
+            <button class="one" onclick='operate("1")'> 1 </button>
+            <button class="two" onclick='operate("2")'> 2 </button>
+            <button class="three" onclick='operate("3")'> 3 </button>
+            <button class="minus" onclick='operate("-")'> − </button> <br>
+            <button class="clear" onclick='operate("ce")'> CE </button>
+            <button class="zero" onclick='operate("0")'> 0 </button>
+            <button class="dot" onclick='operate(".")'> . </button>
+            <button class="equals" onclick='operate("=")'> = </button>
+            <button class="plus" onclick='operate("+")'> + </button>
+        </div>
+    </div>
+
+    <script>
+        var dotPressed = false;
+        var operator = "";
+        var firstNum = 0;
+
+        function operate(key)
+        {
+            if (key == "=")
+            {
+
+            } else if (key == "+" || key == "-" || key == "*" || key == "/") {
+                if (operator.length != 0)   // there is an active operator
+                {
+
+                } else {
+                    let temp = document.getElementsByClassName("screenText1")[0].value;
+
+                }
+            } else if (key == "sqrt" || key == "neg") {
+
+            } else if (key == "del") {
+
+            } else if (key == "ce") {
+
+            } else {
+                if (key == ".") 
+                {
+                    if (!dotPressed)    // decimal dot can be pressed only once
+                    {
+                        document.getElementsByClassName("screenText1")[0].value += key;
+                        dotPressed = true;
+                    }
+                } else {
+                    let temp = document.getElementsByClassName("screenText1")[0].value;
+                    if (key != "0" || temp != "0") // cannot spam 0's
+                    {
+                        document.getElementsByClassName("screenText1")[0].value += key;
+                        temp = document.getElementsByClassName("screenText1")[0].value;
+                        if (temp.substring(0,1) == "0" && temp.substring(1,2) != "." &&
+                            temp.length > 1) // remove 0 in front
+                        {
+                            document.getElementsByClassName("screenText1")[0].value = temp.substring(1, temp.length);
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
