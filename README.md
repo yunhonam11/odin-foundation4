@@ -1,5 +1,5 @@
 Calculator
-INCOMPLETE
+
 ============================================================================
 
 This is my take on the fourth project assignment found on the Odin Project's Foundation course.
