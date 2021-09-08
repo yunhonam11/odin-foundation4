@@ -43,6 +43,7 @@ body
     margin-left: 2.2rem;
     background-color: transparent;
     border: none;
+    text-align: right;
     color: rgb(80,68,68);
 }
 
@@ -54,7 +55,7 @@ body
     margin-left: 2.2rem;
     background-color: transparent;
     border: none;
-    direction: rtl;
+    text-align: right;
     color: rgb(80,68,68);
 }
 

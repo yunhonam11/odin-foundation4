@@ -45,38 +45,37 @@
     <script>
         var dotPressed = false;
         var operator = "";
-        var firstInt = 0;
-        var firstFloat = 0.0;
-        var firstNum = "";
-        var secondInt = 0;
-        var secondFloat = 0.0;
-        var secondNum = "";
+        var firstNum = 0;
+        var secondNum = 0;
 
         function operate(key)
         {
+            var secondScreen = document.getElementsByClassName("screenText2")[0].value;
             if (key == "=")
             {
-
+                if (operator.length != 0)
+                {
+                    var num = Number(document.getElementsByClassName("screenText2")[0].value);
+                    secondNum = Number(num.toFixed(2));
+                    document.getElementsByClassName("screenText1")[0].value += secondNum.toString();
+                    secondNum = Number(secondScreen);
+                    calculate();
+                    fixDecimal();
+                }
             } else if (key == "+" || key == "-" || key == "*" || key == "/") {
-                var temp = document.getElementsByClassName("screenText1")[0].value;
 
                 if (operator.length != 0)   // there is an active operator
                 {
-
+                    
                 } 
                   
-                if (operator.length == 0 && temp.length != 0)
+                if (operator.length == 0 && secondScreen.length != 0)   // no active operator
                 {
-                     if (temp.includes("."))
-                    {
-                        firstFloat = parseFloat(temp);
-                        firstNum = "float";
-                    } else {
-                        firstInt = parseInt(temp);
-                        firstNum = "int";
-                    }
-                    
                     operator = key;
+                    dotPressed = false;
+                    firstNum = Number(secondScreen);
+                    fixDecimal();
+                    document.getElementsByClassName("screenText1")[0].value = firstNum;
                     if (key == "+")
                     {
                         document.getElementsByClassName("screenText1")[0].value += " + ";
@@ -87,65 +86,107 @@
                     } else {
                         document.getElementsByClassName("screenText1")[0].value += " ÷ ";
                     }
-                    dotPressed = false;
+                    document.getElementsByClassName("screenText2")[0].value = "";
                 }
             } else if (key == "sqrt" || key == "neg") {
+                firstNum = Number(secondScreen);
+                if (operator == "")
+                {
+                    if (key == "sqrt" && firstNum >= 0)
+                    {
+                        document.getElementsByClassName("screenText1")[0].value 
+                            = '√' + firstNum.toString();
+                        document.getElementsByClassName("screenText2")[0].value = Math.sqrt(firstNum);
+                        fixDecimal();
+                    } 
 
+                    if (key == "sqrt" && firstNum < 0)
+                    {
+                        document.getElementsByClassName("screenText1")[0].value = "ERROR: SQRT < 0";
+                        document.getElementsByClassName("screenText2")[0].value = "";
+                        firstNum = 0;
+                        secondNum = 0;
+                        dotPressed = false;
+                        operator = "";
+                    }
+
+                    if (key == "neg" && firstNum > 0)
+                    {
+                        firstNum = firstNum * -1;
+                        document.getElementsByClassName("screenText2")[0].value 
+                            = "-" + secondScreen;
+                    }
+                }
             } else if (key == "del") {
 
             } else if (key == "ce") {
-
+                dotPressed = false;
+                operator = "";
+                firstNum = 0;
+                secondNum = 0;
+                document.getElementsByClassName("screenText1")[0].value = "";
+                document.getElementsByClassName("screenText2")[0].value = "";
             } else {
-                var temp = document.getElementsByClassName("screenText1")[0].value;
                 if (key == ".") 
                 {
-                    if (!dotPressed && temp.length != 0)    // decimal dot can be pressed only once
+                    if (!dotPressed && secondScreen.length != 0)    // decimal dot can be pressed only once
                     {
-                        document.getElementsByClassName("screenText1")[0].value += key;
+                        document.getElementsByClassName("screenText2")[0].value += key;
                         dotPressed = true;
                     }
                 } else {
-                    if (key != "0" || temp != "0") // cannot spam 0's
+                    if (key != "0" || secondScreen != "0") // cannot spam 0's in front
                     {
-                        document.getElementsByClassName("screenText1")[0].value += key;
-                        temp = document.getElementsByClassName("screenText1")[0].value;
-                        if (temp.substring(0,1) == "0" && temp.substring(1,2) != "." &&
-                            temp.length > 1) // remove 0 in front
+                        document.getElementsByClassName("screenText2")[0].value += key;
+                        secondScreen = document.getElementsByClassName("screenText2")[0].value;
+                        if (secondScreen.substring(0,1) == "0" && secondScreen.substring(1,2) != "." &&
+                        secondScreen.length > 1) // remove 0 in front
                         {
-                            document.getElementsByClassName("screenText1")[0].value = temp.substring(1, temp.length);
+                            document.getElementsByClassName("screenText2")[0].value = secondScreen.substring(1, secondScreen.length);
                         }
                     }
                 }
             }
         }
 
+        function fixDecimal()
+        {
+            var num = Number(document.getElementsByClassName("screenText2")[0].value);
+            document.getElementsByClassName("screenText2")[0].value = num.toFixed(2);
+            firstNum = Number(num.toFixed(2));
+        }
+
         function calculate()
         {
+            var calculatedNum
+
             if (operator == "+")
             {
-                if (firstNum == "int" && secondNum == "int")
+                calculatedNum = firstNum + secondNum;
+            } else if (operator == "-") {
+                calculatedNum = firstNum - secondNum;
+            } else if (operator == "*") {
+                calculatedNum = firstNum - secondNum;
+            } else if (operator == "/") { 
+                if (secondNum == 0)
                 {
-                    let numResult = firstInt + firstInt;
-                    document.getElementsByClassName("screenText1")[0].value = numResult;
-                    document.getElementsByClassName("screenText2")[0].value = numResult;
-                    firstInt = numResult;
-                } else if (firstNum == "float" && secondNum == "int") {
-                    let numResult = firstInt + firstInt;
-                    document.getElementsByClassName("screenText1")[0].value = numResult;
-                    document.getElementsByClassName("screenText2")[0].value = numResult;
-                    firstInt = numResult;
-                } else if (firstNum == "int" && secondNum == "float") {
-
-                } else if (firstNum == "float" && secondNum == "float") {
-
+                    document.getElementsByClassName("screenText1")[0].value = "ERROR: 0 DENOM";
+                    document.getElementsByClassName("screenText2")[0].value = "";
+                    firstNum = 0;
+                    secondNum = 0;
+                    dotPressed = false;
+                    operator = "";
+                    return;
+                } else {
+                    calculatedNum = firstNum / secondNum;
                 }
             }
-
-            dotPressed = false;
+ 
+            document.getElementsByClassName("screenText2")[0].value = calculatedNum;
             operator = "";
-            secondInt = 0;
-            secondFloat = 0.0;
-            secondNum = "";
+            firstNum = calculatedNum;
+            secondNum = 0;
+            dotPressed = false;
         }
     </script>
 </body>
