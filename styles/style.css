@@ -9,8 +9,7 @@ body
     height: 32.5rem;
     background-color: rgb(56,46,46);
     display: absolute;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 15rem;
     margin-top: 4rem;
     border-radius: 16px;
 }
@@ -83,5 +82,13 @@ body
     border: 5px solid #2F4F4F;
 }
 
-
-
+.instructions
+{
+    display: block;
+    float: right;
+    margin-right: 12rem;
+    margin-top: -30rem;
+    font-family: Verdana, sans-serif;
+    font-size: 2rem;
+    color: #2F4F4F;
+}
