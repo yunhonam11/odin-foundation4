@@ -3,6 +3,7 @@ Calculator
 This is a basic calculator application. Keyboard instructions are included on the right side of the page.
 This calculator can handle decimals (rounded to 2 places), negation, square root (extra), basic arithmetic,
 clear memory, and delete. Keyboard support implemented.
+
 **SPECIAL**: This calculator can handle calculations such as sqrt(x) + sqrt(y) = ?
 
 ============================================================================
