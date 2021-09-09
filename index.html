@@ -115,15 +115,9 @@
                 if (operator.length != 0)
                 {
                     if (secondNum == 0) secondNum = Number(secondScreen);
-                    if (secondNum.toString().includes("."))
-                    {
-                        secondNum = Number(secondNum.toFixed(2));
-                    } else {
-                        secondNum = Number(secondNum);
-                    }
+                    fixDecimal();
                     if (!sqrtOn) document.getElementsByClassName("screenText1")[0].value += secondNum.toString();
                     calculate();
-                    fixDecimal();
                     sqrtOn = false;
                 }
             } else if (key == "+" || key == "-" || key == "*" || key == "/") {
@@ -178,8 +172,8 @@
                             document.getElementsByClassName("screenText1")[0].value 
                                      = '√' + firstNum.toString();
                             firstNum = Math.sqrt(firstNum);
-                            document.getElementsByClassName("screenText2")[0].value = firstNum.toString();
                             fixDecimal();
+                            document.getElementsByClassName("screenText2")[0].value = firstNum.toString();
                         }
                     } 
 
@@ -191,9 +185,10 @@
                             document.getElementsByClassName("screenText1")[0].value 
                                     += '√' + secondNum.toString();
                             secondNum = Math.sqrt(secondNum);
-                            document.getElementsByClassName("screenText2")[0].value = secondNum.toString();
                             fixDecimal();
+                            document.getElementsByClassName("screenText2")[0].value = secondNum.toString();
                             sqrtOn = true;
+                            document.getElementsByClassName("equals")[0].click();
                         }
                     }
  
@@ -265,11 +260,14 @@
 
         function fixDecimal()
         {
+            if (firstNum.toString().includes("."))
+            {
+                firstNum = Number(firstNum.toFixed(2));
+            }
+
             if (secondNum.toString().includes("."))
             {
-                var num = Number(document.getElementsByClassName("screenText2")[0].value);
-                document.getElementsByClassName("screenText2")[0].value = num.toFixed(2);
-                firstNum = Number(num.toFixed(2));
+                secondNum = Number(secondNum.toFixed(2));
             }
         }
 
@@ -298,12 +296,12 @@
                     calculatedNum = firstNum / secondNum;
                 }
             }
- 
-            document.getElementsByClassName("screenText2")[0].value = calculatedNum;
             operator = "";
             firstNum = calculatedNum;
             secondNum = 0;
             dotPressed = false;
+            fixDecimal();
+            document.getElementsByClassName("screenText2")[0].value = firstNum;
         }
     </script>
 </body>
