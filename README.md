@@ -1,4 +1,9 @@
-Calculator (Incomplete)
+Calculator
+
+This is a basic calculator application that uses eventlistener to allow keyboard typing to punch inputs into the calculator. 
+The original Odin project does not require adding square root, but I did it anyways.
+The calculator only allows 2 digit decimal calculations; otherwise, they are rounded. Preventing overflow not implemented.
+All other project specifications fully functional.
 
 ============================================================================
 
